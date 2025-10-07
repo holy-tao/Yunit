@@ -25,13 +25,13 @@ class Assert {
                 return
             }
 
-            throw TypeError(Format("Expected a(n) {1} but got a(n) {2}", errType.Prototype.__Class, Type(thrown)))
+            throw TypeError(Format("Expected a(n) {1} but got a(n) {2}", errType.Prototype.__Class, Type(thrown)), -1)
         }
 
         throw Error(Format("Expeted {1} to throw a(n) {2}, but nothing was thrown", 
             (callable.HasProp("Name") && callable.Name != "") ? callable.Name : "Anonymous " . Type(callable),
             errType.Prototype.__Class
-        ))
+        ), -1)
     }
 
     /**
@@ -52,24 +52,24 @@ class Assert {
 
     static Equals(left, right){
         if(left != right){
-            throw Error("{1} =/= {2}", String(left), String(right))
+            throw Error(Format("{1} =/= {2}", String(left), String(right)), -1)
         }
     }
 
     static NotEquals(left, right){
         if(left != right){
-            throw Error("{1} == {2}", String(left), String(right))
+            throw Error(Format("{1} == {2}", String(left), String(right)), -1)
         }
     }
 
     static BuffersEqual(left, right){
         if(left.size != right.size){
-            throw Error(Format("Buffers {1} and {2} are not equal; sizes differ", String(left), String(right)))
+            throw Error(Format("Buffers {1} and {2} are not equal; sizes differ", String(left), String(right)), -1)
         }
 
         matchingBytes := DllCall("kernel32\RtlCompareMemory", "ptr", left.ptr, "ptr", right.ptr, "int", left.size)
         if(matchingBytes != left.size){
-            throw Error(Format("{1} and {2} differ at offset {3}", String(left), String(right), matchingBytes))
+            throw Error(Format("{1} and {2} differ at offset {3}", String(left), String(right), matchingBytes), -1)
         }
     }
 }
