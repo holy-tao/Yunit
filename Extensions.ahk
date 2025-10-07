@@ -47,6 +47,18 @@ ObjToString(thisObj){
     return Type(thisObj) . " " . String(foundProps)
 }
 
+BufferToString(thisBuf){
+    hex := "", VarSetStrCapacity(&hex, thisBuf.size * 3)
+
+    Loop(thisBuf.size){
+        byte := NumGet(thisBuf, A_Index - 1, "char") & 0xFF
+        hex .= Format(" {1:02X}", byte)
+    }
+
+    return Format("Buffer<{1} @ 0x{2:0X}>{3}", thisBuf.size, thisBuf.ptr, hex)
+}
+
 Object.Prototype.DefineProp("ToString", {Call: (self) => ObjToString(self)})
 Array.Prototype.DefineProp("ToString", {Call: (self) => ArrayToString(self)})
 Map.Prototype.DefineProp("ToString", {Call: (self) => MapToString(self)})
+Buffer.Prototype.DefineProp("ToString", {Call: (self) => BufferToString(self)})
