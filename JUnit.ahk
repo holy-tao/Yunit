@@ -91,9 +91,9 @@ class YUnitJUnit {
      * @param filepath 
      */
     StripPathToRelative(filepath){
-        static repoRoot := YUnitJUnit.Cmd("git rev-parse --show-toplevel")
+        static repoRoot := StrReplace(YUnitJUnit.Cmd("git rev-parse --show-toplevel"), "/", "\")
 
-        return StrReplace(filepath, repoRoot, "")
+        return LTrim(StrReplace(filepath, repoRoot, ""), "\")
     }
 
     /**
