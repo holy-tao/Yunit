@@ -61,4 +61,15 @@ class Assert {
             throw Error("{1} == {2}", String(left), String(right))
         }
     }
+
+    static BuffersEqual(left, right){
+        if(left.size != right.size){
+            throw Error(Format("Buffers {1} and {2} are not equal; sizes differ", String(left), String(right)))
+        }
+
+        matchingBytes := DllCall("kernel32\RtlCompareMemory", "ptr", left.ptr, "ptr", right.ptr, "int", left.size)
+        if(matchingBytes != left.size){
+            throw Error(Format("{1} and {2} differ at offset {3}", String(left), String(right), matchingBytes))
+        }
+    }
 }
