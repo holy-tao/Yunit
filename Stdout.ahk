@@ -16,6 +16,6 @@ class YunitStdOut
             Details := ""
             Status := "PASS"
         }
-        FileAppend Status ": " Category "." Test " " Details "`n", "*"
+        FileAppend(Status ": " Category "." Test " " Details "`n", "*")
     }
 }

@@ -2,7 +2,6 @@ class YunitWindow
 {
 	__new(instance)
 	{
-		global YunitWindowTitle, YunitWindowEntries, YunitWindowStatusBar
 		width := 500
 		height := 400
 		MyGui := Gui(,"YUnit Output")
@@ -87,7 +86,7 @@ class YunitWindow
 }
 
 YUnit_OnClose(Gui) {
-  ExitApp
+  ExitApp()
 }
 
 YUnit_OnSize(MyGui, EventInfo, Width, Height) {

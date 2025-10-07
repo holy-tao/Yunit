@@ -11,7 +11,7 @@ class YunitJUnit{
         this.filename := A_ScriptDir . "\junit.xml"
         ; the file is deleted if it exists already
         if FileExist(this.filename) {
-            FileDelete this.filename
+            FileDelete(this.filename)
         }
 				this.out := Array()
 				this.tests := {}
