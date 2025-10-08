@@ -72,4 +72,24 @@ class Assert {
             throw Error(Format("{1} and {2} differ at offset {3}", String(left), String(right), matchingBytes), -1)
         }
     }
+    
+    static MapsEqual(left, right){
+        for(key, val in left){
+            if(!right.has(key) || (left[key] != right[key])){
+                throw Error(Format("Maps {1} and {2} are not equal", String(left), String(right)))
+            }
+        }
+    }
+
+    static ArraysEqual(left, right){
+        if(left.length != right.length){
+            throw Error(Format("Arrays {1} and {2} are not equal", String(left), String(right)))
+        }
+
+        Loop(left.length){
+            if(left[A_Index] != right[A_Index]){
+                throw Error(Format("Arrays {1} and {2} differ at index {3}", String(left), String(right), A_Index))
+            }
+        }
+    }
 }
