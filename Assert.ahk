@@ -75,7 +75,19 @@ class Assert {
     
     static MapsEqual(left, right){
         for(key, val in left){
-            if(!right.has(key) || (left[key] != right[key])){
+            if(!right.has(key)){
+                throw Error(Format("Maps {1} and {2} are not equal", String(left), String(right)))
+            }
+
+            if(val is Map){
+                Assert.IsType(right[key], Map)
+                Assert.MapsEqual(val, right[key])
+            }
+            else if(val is Array){
+                Assert.IsType(right[key], Array)
+                Assert.ArraysEqual(val, right[key])
+            }
+            else if(left[key] != right[key]){
                 throw Error(Format("Maps {1} and {2} are not equal", String(left), String(right)))
             }
         }
@@ -87,7 +99,15 @@ class Assert {
         }
 
         Loop(left.length){
-            if(left[A_Index] != right[A_Index]){
+            if(left[A_Index] is Map){
+                Assert.IsType(right[A_Index], Map)
+                Assert.MapsEqual(left[A_Index], right[A_Index])
+            }
+            else if(left[A_Index] is Array){
+                Assert.IsType(right[A_Index], Array)
+                Assert.ArraysEqual(left[A_Index], right[A_Index])
+            }
+            else if(left[A_Index] != right[A_Index]){
                 throw Error(Format("Arrays {1} and {2} differ at index {3}", String(left), String(right), A_Index))
             }
         }
