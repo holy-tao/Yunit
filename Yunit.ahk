@@ -1,12 +1,18 @@
 #Requires AutoHotkey v2.0-beta.1
 
+#Include Stopwatch.ahk
+
 class Yunit
 {
+    Modules := unset
+    watch := unset
+
     class Tester extends Yunit
     {
         __New(Modules)
         {
             this.Modules := Modules
+            this.watch := Stopwatch()
         }
     }
     
@@ -33,10 +39,10 @@ class Yunit
         }
     }
     
-    Update(Category, Test, Result)
+    Update(Category, Test, Result, Time)
     {
         for module in this.Modules
-            module.Update(Category, Test, Result)
+            module.Update(Category, Test, Result, Time)
     }
     
     TestClass(results, cls)
@@ -50,10 +56,10 @@ class Yunit
                 continue
             if environment.HasMethod("Begin") 
                 environment.Begin()
-            result := 0
+            result := 0, time := 0
             try
             {
-                environment.%k%()
+                this.watch.Time(ObjBindMethod(environment, k), &time)
                 if ObjHasOwnProp(environment, "ExpectedException")
                     throw Error("ExpectedException")
             }
@@ -65,7 +71,7 @@ class Yunit
             }
             results[k] := result
             environment.DeleteProp("ExpectedException")
-            this.Update(cls.prototype.__class, k, results[k])
+            this.Update(cls.prototype.__class, k, results[k], time)
             if environment.HasMethod("End")
                 environment.End()
         }

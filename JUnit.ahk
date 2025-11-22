@@ -1,5 +1,7 @@
 #Requires AutoHotkey v2.0
 
+; https://github.com/testmoapp/junitxml
+
 class YUnitJUnit {
 
     __new(instance)
@@ -36,10 +38,10 @@ class YUnitJUnit {
         file.close()
     }
     
-    Update(Category, TestName, Result)
+    Update(Category, TestName, Result, Time)
     {		
         this.tests.overall := this.tests.overall + 1
-        msg := Format('`t`t<testcase name="{1}" classname="{2}"', TestName, Category)
+        msg := Format('`t`t<testcase name="{1}" classname="{2}" time="{3}"', TestName, Category, Time)
         if Result is Error
         {
             this.out.Push(msg . ">")

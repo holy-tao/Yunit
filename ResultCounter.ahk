@@ -13,7 +13,7 @@ class YunitResultCounter {
 
     }
 
-    Update(Category, Test, Result)
+    Update(Category, Test, Result, Time)
     {
         if(result is Error){
             YunitResultCounter.failures++

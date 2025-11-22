@@ -4,7 +4,7 @@ class YunitStdOut
     {
     }
 
-    Update(Category, Test, Result) ;wip: this only supports one level of nesting?
+    Update(Category, Test, Result, Time) ;wip: this only supports one level of nesting?
     {
         if Result is Error
         {
@@ -16,6 +16,6 @@ class YunitStdOut
             Details := ""
             Status := "PASS"
         }
-        FileAppend(Status ": " Category "." Test " " Details "`n", "*")
+        FileAppend(Format("{1}: {2} {3} {4} ({5} ms)`n", Status, Category, Test, Details, Time * 1000), "*")
     }
 }
