@@ -57,7 +57,7 @@ class Assert {
     }
 
     static NotEquals(left, right){
-        if(left != right){
+        if(left == right){
             throw Error(Format("{1} == {2}", String(left), String(right)), -1)
         }
     }
