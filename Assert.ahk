@@ -67,8 +67,10 @@ class Assert {
             throw Error(Format("Expected {1} but got {2}; sizes differ", String(left), String(right)), -1)
         }
 
-        matchingBytes := DllCall("RtlCompareMemory", "ptr", left.ptr, "ptr", right.ptr, "int", left.size)
-        if(matchingBytes != left.size){
+        matchingBytes := A_PtrSize == 8 ? 
+            DllCall("ntdll\RtlCompareMemory", "ptr", left.ptr, "ptr", right.ptr, "int", left.size) :
+            DllCall("msvcrt\memcmp", "ptr", left.ptr, "ptr", right.ptr, "uint", left.size, "cdecl int")
+        if(matchingBytes != A_PtrSize == 8 ? left.size : 0){
             throw Error(Format("Expected {1} but got {2}; difference at offset {3}", String(left), String(right), matchingBytes), -1)
         }
     }
