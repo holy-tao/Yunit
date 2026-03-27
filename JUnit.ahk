@@ -23,6 +23,10 @@ class YUnitJUnit {
     }
   
     __Delete() {
+        this._Flush()
+    }
+
+    _Flush() {
         file := FileOpen(this.filename, "w")
         file.write('<?xml version="1.0" encoding="UTF-8"?>`n')
         msg := Format('<testsuites failures="{1}" tests="{2}">', this.tests.fail, this.tests.overall)
@@ -36,12 +40,10 @@ class YUnitJUnit {
         file.write("`t</testsuite>`n")
         file.write("</testsuites>`n")
         file.close()
-
-        FileAppend("Results written to " this.filename "`n", "*")
     }
-    
+
     Update(Category, TestName, Result, Time)
-    {		
+    {
         this.tests.overall := this.tests.overall + 1
         msg := Format('`t`t<testcase name="{1}" classname="{2}" time="{3}"', TestName, Category, Time)
         if Result is Error
@@ -55,11 +57,12 @@ class YUnitJUnit {
 
             this.out.Push("`t`t</testcase>")
         }
-		Else 
+		Else
         {
             this.out.Push(msg . "/>")
             this.tests.pass := this.tests.pass + 1
         }
+        this._Flush()
     }
 
     /**
