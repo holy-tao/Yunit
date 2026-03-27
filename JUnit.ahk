@@ -36,6 +36,8 @@ class YUnitJUnit {
         file.write("`t</testsuite>`n")
         file.write("</testsuites>`n")
         file.close()
+
+        FileAppend("Results written to " this.filename "`n", "*")
     }
     
     Update(Category, TestName, Result, Time)
