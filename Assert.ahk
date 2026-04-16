@@ -158,8 +158,8 @@ class Assert {
      * @param expr 
      */
     static Truthy(expr) {
-        if(!expr)
-            throw ValueError("Expected a truthy value", , expr)
+        if !(val := expr)
+            throw ValueError("Expected a truthy value but got " String(val), , expr)
     }
 
     /**
@@ -167,8 +167,8 @@ class Assert {
      * @param expr 
      */
     static Falsy(expr) {
-        if(!expr)
-            throw ValueError("Expected a falsy value", , expr)
+        if val := expr
+            throw ValueError("Expected a falsy value but got " String(val), , expr)
     }
 
     /**
