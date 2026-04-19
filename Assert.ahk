@@ -13,7 +13,8 @@ class Assert {
      * 
      * @param {Func () => Any} callable callable object that you expect to throw an error 
      * @param {Class} errType the type of the object you expect to be thrown. Probably something
-     *          extending error 
+     *          extending error
+     * @returns {Any} the thrown error
      */
     static Throws(callable, errType){
         try{
@@ -22,7 +23,7 @@ class Assert {
         }
         catch Any as thrown{
             if(thrown is errType){
-                return
+                return thrown
             }
 
             throw TypeError(Format("Expected a(n) {1} but got a(n) {2}", errType.Prototype.__Class, Type(thrown)), -1)
